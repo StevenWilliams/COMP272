@@ -2,7 +2,7 @@ package org.stevenw.AU272.AssignmentOne;
 
 import java.util.ArrayList;
 
-public class PriorityQueue<T extends Comparable<T>> {
+public class PriorityQueue<T extends Comparable<T>> { //make this extend SingleLinkedList???? todo
     public PriorityQueue() {
         list = new SingleLinkedList<T>();
     }
@@ -28,7 +28,7 @@ Describe the methods:
 - size() - returns an int that's the amount of elements in the queue.
 
      */
-    SingleLinkedList<T> list;
+    private final SingleLinkedList<T> list;
     public boolean add(T e) {
         list.priorityAdd(e);
         return true;
@@ -71,8 +71,14 @@ Describe the methods:
         pq2.remove();
         pq2.getList();
     }
-    public T remove() {
+    public T deleteMin() {
         return list.remove();
+    }
+    public T remove() { //alias for deleteMin()
+        return deleteMin();
+    }
+    public int size() {
+        return list.size();
     }
     public ArrayList getList() {
         return list.getList();
