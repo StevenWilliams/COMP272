@@ -29,6 +29,23 @@ Describe the methods:
 
      */
     private final SingleLinkedList<T> list;
+
+    /**
+     * @param
+     * @return
+     */
+    public void sort() {
+
+    }
+
+    public T getHighest() {
+        return list.getHighest();
+    }
+
+    public T getLowest() {
+        return list.getLowest();
+    }
+
     public boolean add(T e) {
         list.priorityAdd(e);
         return true;
@@ -71,11 +88,13 @@ Describe the methods:
         pq2.remove();
         pq2.getList();
     }
-    public T deleteMin() {
-        return list.remove();
+
+    public T deleteMin() { //alias for remove
+        return remove();
     }
-    public T remove() { //alias for deleteMin()
-        return deleteMin();
+
+    public T remove() {
+        return list.remove();
     }
     public int size() {
         return list.size();

@@ -1,6 +1,7 @@
 package org.stevenw.AU272.AssignmentOne;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
 public class SingleLinkedList<E extends Comparable<E>> {
@@ -12,7 +13,16 @@ public class SingleLinkedList<E extends Comparable<E>> {
         return size;
     }
 
+    public E getLowest() {
+        return (E) head.getData();
+    }
+
+    public E getHighest() {
+        return (E) tail.getData();
+    }
     public ArrayList<E> getList() {
+        LinkedList listTest = new LinkedList();
+
         ArrayList arrayList = new ArrayList();
         if (head == null) return arrayList;
         arrayList.add(head);
@@ -38,6 +48,7 @@ public class SingleLinkedList<E extends Comparable<E>> {
         size++;
         return true;
     }
+
 
     public boolean priorityAdd(Comparable element) {
         Node node = new Node<>(element);
@@ -84,6 +95,21 @@ public class SingleLinkedList<E extends Comparable<E>> {
         return true;
     }
 
+    public E get(int position) {
+        Node node = getNode(position);
+        return (E) node.getData();
+    }
+
+    public E peak() {
+        return (E) head.getData();
+    }
+
+    public void sort() {
+    }
+
+    public void add(int pos, Comparable element) {
+    }
+
     public E remove() {
         if (isEmpty()) throw new NoSuchElementException(); //returns if list is empty
         E data = (E) head.getData();
@@ -93,6 +119,34 @@ public class SingleLinkedList<E extends Comparable<E>> {
         return data;
     }
 
+    private Node getNode(int pos) {
+        Node node = head;
+        for (int i = 0; i < pos; i++) {
+            node = head.getNext();
+        }
+        return node;
+    }
+
+    public void swapAdjacent(int pos0) { //todo cleanup and test
+        int pos1 = pos0 + 1;
+        if (pos0 > 0) {
+            Node preNode0 = getNode(pos0 - 1); //won't work for head?
+            Node node0 = getNode(pos0);
+            Node node1 = getNode(pos1);
+            node0.setNext(node1.getNext());
+            node1.setNext(node0);
+            preNode0.setNext(node1);
+        } else {
+            Node node0 = head;
+            Node node1 = head.getNext();
+            node0.setNext(node1.getNext());
+            node1.setNext(node0);
+            head = node1;
+        }
+    }
+
+    public void swap(int pos0, int pos1) {
+    }
     public boolean isEmpty() {
         return size() == 0;
     }
