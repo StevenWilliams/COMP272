@@ -64,7 +64,18 @@ Describe the methods:
     pq.add(d);
     pq.add(2);
     pq.add(7);
-    PriorityQueue pq2 = new PriorityQueue<String>();
+        pq.getList();
+        System.out.println("-----");
+
+        pq.list.swapAdjacent(0);
+        pq.getList();
+        System.out.println("-----");
+
+        pq.list.swapAdjacent(2);
+        pq.getList();
+
+
+        PriorityQueue pq2 = new PriorityQueue<String>();
     pq2.add("d");
     pq2.add("b");
     pq2.add("aa");

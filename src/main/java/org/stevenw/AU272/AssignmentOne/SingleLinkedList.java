@@ -121,28 +121,46 @@ public class SingleLinkedList<E extends Comparable<E>> {
 
     private Node getNode(int pos) {
         Node node = head;
-        for (int i = 0; i < pos; i++) {
-            node = head.getNext();
+        for (int j = 0; j < pos; j++) {
+            node = node.getNext();
+            System.out.println("j" + j);
         }
         return node;
     }
 
     public void swapAdjacent(int pos0) { //todo cleanup and test
         int pos1 = pos0 + 1;
+        Node node0 = getNode(pos0);
+        Node node1 = getNode(pos1);
+        System.out.println(" node0: " + node0.getData() + " node1: " + node1.getData());
+        if (pos0 > 0) {
+            Node preNode0 = getNode(pos0 - 1); //won't work for head?
+            System.out.println("prenode0: " + preNode0.getData());
+
+            preNode0.setNext(node1);
+        } else {
+            head = node1;
+        }
+
+        node0.setNext(node1.getNext());
+        node1.setNext(node0);
+
+        /*
         if (pos0 > 0) {
             Node preNode0 = getNode(pos0 - 1); //won't work for head?
             Node node0 = getNode(pos0);
             Node node1 = getNode(pos1);
+            System.out.println("prenode0: " + preNode0.getData() + " node0: " + node0.getData() + " node1: " + node1.getData());
+            preNode0.setNext(node1);
             node0.setNext(node1.getNext());
             node1.setNext(node0);
-            preNode0.setNext(node1);
         } else {
             Node node0 = head;
             Node node1 = head.getNext();
             node0.setNext(node1.getNext());
             node1.setNext(node0);
             head = node1;
-        }
+        }*/
     }
 
     public void swap(int pos0, int pos1) {
