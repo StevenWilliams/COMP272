@@ -9,10 +9,18 @@ public class SingleLinkedList<E extends Comparable<E>> {
     private Node tail;
     private int size = 0;
 
+    /**
+     * @return how many items are in the list
+     * runtime complexity: O(1)
+     */
     public int size() {
         return size;
     }
 
+    /**
+     * @return returns the item with the lowest comparable value
+     * runtime complexity: O(1)
+     */
     public E getLowest() {
         return (E) head.getData();
     }
@@ -20,6 +28,8 @@ public class SingleLinkedList<E extends Comparable<E>> {
     public E getHighest() {
         return (E) tail.getData();
     }
+
+
     public ArrayList<E> getList() {
         LinkedList listTest = new LinkedList();
 
@@ -37,6 +47,10 @@ public class SingleLinkedList<E extends Comparable<E>> {
         return arrayList;
     }
 
+    /**
+     * @param element an instance of the type's object (must be comparable)
+     * @returns true if added to list
+     */
     public boolean add(Comparable element) {
         Node node = new Node<>(element);
         if (size() == 0) {
@@ -172,6 +186,9 @@ public class SingleLinkedList<E extends Comparable<E>> {
     public class Node<F extends Comparable<E>> {
         private final F data;
 
+        /**
+         * @param data - the object of the node's type
+         */
         public Node(F data) {
             this.data = data;
         }
