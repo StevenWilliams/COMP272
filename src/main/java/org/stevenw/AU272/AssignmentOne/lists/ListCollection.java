@@ -1,4 +1,4 @@
-package org.stevenw.AU272.AssignmentOne;
+package org.stevenw.AU272.AssignmentOne.lists;
 
 import java.util.Collection;
 import java.util.Iterator;

@@ -1,5 +1,7 @@
 package org.stevenw.AU272.AssignmentOne;
 
+import org.stevenw.AU272.AssignmentOne.lists.DLList;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

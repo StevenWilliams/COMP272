@@ -3,6 +3,7 @@ package org.stevenw.AU272.AssignmentOne;
 //import com.sun.tools.javac.util.Assert;
 
 import org.junit.jupiter.api.Assertions;
+import org.stevenw.AU272.AssignmentOne.queue.PriorityQueue;
 //import static sun.jvm.hotspot.code.CompressedStream.L;
 
 

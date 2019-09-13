@@ -1,12 +1,12 @@
-package org.stevenw.AU272.AssignmentOne;
+package org.stevenw.AU272.AssignmentOne.lists;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
 public class SingleLinkedList<E extends Comparable<E>> {
-    private Node head;
-    private Node tail;
+    private SingleLinkedNode head;
+    private SingleLinkedNode tail;
     private int size = 0;
 
     /**
@@ -36,7 +36,7 @@ public class SingleLinkedList<E extends Comparable<E>> {
         ArrayList arrayList = new ArrayList();
         if (head == null) return arrayList;
         arrayList.add(head);
-        Node node = head;
+        SingleLinkedNode node = head;
         System.out.println(node.getData());
         while (node.getNext() != null) {
             arrayList.add(node.getNext());
@@ -52,7 +52,7 @@ public class SingleLinkedList<E extends Comparable<E>> {
      * @returns true if added to list
      */
     public boolean add(Comparable element) {
-        Node node = new Node<>(element);
+        SingleLinkedNode node = new SingleLinkedNode<>(element);
         if (size() == 0) {
             head = node;
         } else {
@@ -65,7 +65,7 @@ public class SingleLinkedList<E extends Comparable<E>> {
 
 
     public boolean priorityAdd(Comparable element) {
-        Node node = new Node<>(element);
+        SingleLinkedNode node = new SingleLinkedNode<>(element);
         if (size() == 0) {
             head = node;
             //System.out.println("size0" + element.toString());
@@ -79,9 +79,9 @@ public class SingleLinkedList<E extends Comparable<E>> {
         } else { //equal to or greater
             //System.out.println("lessthan2nd" + element.toString());
 
-            Node node0 = head;
+            SingleLinkedNode node0 = head;
             //System.out.println("node0" + node0.getData().toString());
-            Node node1 = head.getNext();
+            SingleLinkedNode node1 = head.getNext();
             if (node1 == null) {
                 head.setNext(node);
             } else {
@@ -110,7 +110,7 @@ public class SingleLinkedList<E extends Comparable<E>> {
     }
 
     public E get(int position) {
-        Node node = getNode(position);
+        SingleLinkedNode node = getNode(position);
         return (E) node.getData();
     }
 
@@ -133,8 +133,8 @@ public class SingleLinkedList<E extends Comparable<E>> {
         return data;
     }
 
-    private Node getNode(int pos) {
-        Node node = head;
+    private SingleLinkedNode getNode(int pos) {
+        SingleLinkedNode node = head;
         for (int j = 0; j < pos; j++) {
             node = node.getNext();
             System.out.println("j" + j);
@@ -144,11 +144,11 @@ public class SingleLinkedList<E extends Comparable<E>> {
 
     public void swapAdjacent(int pos0) { //todo cleanup and test
         int pos1 = pos0 + 1;
-        Node node0 = getNode(pos0);
-        Node node1 = getNode(pos1);
+        SingleLinkedNode node0 = getNode(pos0);
+        SingleLinkedNode node1 = getNode(pos1);
         System.out.println(" node0: " + node0.getData() + " node1: " + node1.getData());
         if (pos0 > 0) {
-            Node preNode0 = getNode(pos0 - 1); //won't work for head?
+            SingleLinkedNode preNode0 = getNode(pos0 - 1); //won't work for head?
             System.out.println("prenode0: " + preNode0.getData());
 
             preNode0.setNext(node1);
@@ -183,29 +183,4 @@ public class SingleLinkedList<E extends Comparable<E>> {
         return size() == 0;
     }
 
-    public class Node<F extends Comparable<E>> {
-        private final F data;
-
-        /**
-         * @param data - the object of the node's type
-         */
-        public Node(F data) {
-            this.data = data;
-        }
-
-        public F getData() {
-            return data;
-        }
-
-        private Node<F> next;
-
-        public Node<F> getNext() {
-            return next;
-        }
-
-        public void setNext(Node<F> next) {
-            this.next = next;
-        }
-
-    }
 }

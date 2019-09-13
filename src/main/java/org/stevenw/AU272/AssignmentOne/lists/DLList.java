@@ -1,20 +1,23 @@
-package org.stevenw.AU272.AssignmentOne;
+package org.stevenw.AU272.AssignmentOne.lists;
 
-public class DLList<T> {
-    private Node head;
-    private Node tail;
+import java.util.Collections;
+
+public class DLList<T>  {
+    private Node<T> head;
+    private Node<T> tail;
     private int size = 0;
 
     public int size() {
         return size;
     }
 
+
     public T get(int pos) {
         return (T) getNode(pos).getData();
     }
 
-    private Node getNode(int pos) {
-        Node node = head;
+    private Node<T> getNode(int pos) {
+        Node<T> node = head;
         for (int j = 0; j < pos; j++) {
             node = node.getNext();
             System.out.println("j" + j);
@@ -36,12 +39,28 @@ public class DLList<T> {
         return true;
     }
 
+    public void reverse() {
+        Node<T> newHead = new Node(null);
+        Node<T> cursorForwards = newHead; //keep track of links going forward
+        Node<T> cursor = tail.getPrev(); //keep track of links going backwards
+        Node<T> cursorPrev = cursor.getPrev();
+        while(cursor!= head) {
+            cursor.setPrev(cursorForwards);
+            cursorForwards.setNext(cursor);
+            //update the cursors
+            cursorForwards = cursor;
+            cursor = cursorPrev;
+            cursorPrev = cursor.getPrev();
+        }
+        head = newHead;
+        tail.setPrev(cursorForwards);
+    }
     public void swapAdjacent(int pos0) { //todo cleanup and test
 
-        Node node0 = getNode(pos0);
-        Node node1 = node0.getNext();
+        Node<T> node0 = getNode(pos0);
+        Node<T> node1 = node0.getNext();
         if (pos0 > 0) {
-            Node preNode0 = node0.getPrev();
+            Node<T> preNode0 = node0.getPrev();
             node1.setPrev(preNode0);
             preNode0.setNext(node1);
         } else { //if node0 is head
@@ -58,7 +77,7 @@ public class DLList<T> {
         private final F data;
         private Node<F> next;
         private Node<F> prev;
-        private int size = 0;
+        //private int size = 0;
 
 
 

@@ -1,4 +1,6 @@
-package org.stevenw.AU272.AssignmentOne;
+package org.stevenw.AU272.AssignmentOne.queue;
+
+import org.stevenw.AU272.AssignmentOne.lists.SingleLinkedList;
 
 import java.util.ArrayList;
 
