@@ -1,6 +1,6 @@
 package org.stevenw.AU272.AssignmentOne.lists;
 
-public class SingleLinkedNode<F extends Comparable> {
+public class SingleLinkedNode<F> {
     private final F data;
 
     /**

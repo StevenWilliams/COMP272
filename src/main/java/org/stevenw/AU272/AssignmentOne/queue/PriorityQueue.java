@@ -9,6 +9,13 @@ public class PriorityQueue<T extends Comparable<T>> { //make this extend SingleL
         list = new SingleLinkedList<T>();
     }
     /*
+    3, 5, 10, 15
+    add(2) - 2, 3, 5, 10, 15
+    add(7) - 2, 3, 5, 7, 10, 15
+
+    deleteMin(2)
+     */
+    /*
     Q1
     (25 marks total) Describe the meaning of the essential methods add(x), deleteMin(), and
 size() that are supported by the priority queue interface (5 marks).

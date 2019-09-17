@@ -66,10 +66,11 @@ public class SingleLinkedList<E extends Comparable<E>> {
 
     public boolean priorityAdd(Comparable element) {
         SingleLinkedNode node = new SingleLinkedNode<>(element);
+
         if (size() == 0) {
             head = node;
             //System.out.println("size0" + element.toString());
-        } else if (node.getData().compareTo(head.getData()) < 0) { // less than
+        } else if (element.compareTo(head.getData()) < 0) { // less than
             //System.out.println("lessthan1st" + element.toString());
             node.setNext(head);
             head = node;
