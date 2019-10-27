@@ -1,7 +1,7 @@
 package org.stevenw.AU272.AssignmentOne.lists;
 
 public class SingleLinkedNode<F> {
-    private final F data;
+    protected final F data;
 
     /**
      * @param data - the object of the node's type
@@ -14,7 +14,7 @@ public class SingleLinkedNode<F> {
         return data;
     }
 
-    private SingleLinkedNode<F> next;
+    protected SingleLinkedNode<F> next;
 
     public SingleLinkedNode<F> getNext() {
         return next;

@@ -1,12 +1,12 @@
 package org.stevenw.AU272.AssignmentOne.queue;
 
-import org.stevenw.AU272.AssignmentOne.lists.SingleLinkedList;
+import org.stevenw.AU272.AssignmentOne.lists.PriorityList;
 
 import java.util.ArrayList;
 
 public class PriorityQueue<T extends Comparable<T>> { //make this extend SingleLinkedList???? todo
     public PriorityQueue() {
-        list = new SingleLinkedList<T>();
+        list = new PriorityList<T>();
     }
     /*
     3, 5, 10, 15
@@ -37,7 +37,7 @@ Describe the methods:
 - size() - returns an int that's the amount of elements in the queue.
 
      */
-    private final SingleLinkedList<T> list;
+    private final PriorityList<T> list;
 
     /**
      * @param
@@ -47,21 +47,22 @@ Describe the methods:
 
     }
 
-    public T getHighest() {
+    public Comparable<T> getHighest() {
         return list.getHighest();
     }
 
-    public T getLowest() {
+    public Comparable<T> getLowest() {
         return list.getLowest();
     }
 
     public boolean add(T e) {
-        list.priorityAdd(e);
+        list.add(e);
+        list.add
         return true;
     }
     public static void main(String[] args) {
 	// write your code here
-    Integer a = 5;
+   /* Integer a = 5;
     Integer d = 22;
     Integer b = 7;
     Integer c = 3;
@@ -106,16 +107,13 @@ Describe the methods:
         pq2.getList();
         System.out.println("-----");
         pq2.remove();
-        pq2.getList();
+        pq2.getList();*/
     }
 
     public T deleteMin() { //alias for remove
-        return remove();
-    }
-
-    public T remove() {
         return list.remove();
     }
+
     public int size() {
         return list.size();
     }

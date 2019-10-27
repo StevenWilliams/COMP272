@@ -12,10 +12,18 @@ public class DLList<T>  {
     }
 
 
+    /**
+     * @param pos - index
+     * @return data of generic type T at the specified index.
+     */
     public T get(int pos) {
         return (T) getNode(pos).getData();
     }
 
+    /**
+     * @param pos - index
+     * @return Node at specified index
+     */
     private Node<T> getNode(int pos) {
         Node<T> node = head;
         for (int j = 0; j < pos; j++) {
@@ -27,6 +35,7 @@ public class DLList<T>  {
 
 
     //check code (coped from single linked)
+    //todo: verify
     public boolean add(Comparable element) {
         Node node = new Node<>(element);
         if (size() == 0) {
@@ -39,8 +48,11 @@ public class DLList<T>  {
         return true;
     }
 
+    /**
+     * Reverses order of nodes.
+     */
     public void reverse() {
-        Node<T> newHead = new Node(null);
+        Node<T> newHead = new Node<T>(null);
         Node<T> cursorForwards = newHead; //keep track of links going forward
         Node<T> cursor = tail.getPrev(); //keep track of links going backwards
         Node<T> cursorPrev = cursor.getPrev();
@@ -55,6 +67,10 @@ public class DLList<T>  {
         head = newHead;
         tail.setPrev(cursorForwards);
     }
+
+    /**
+     * @param pos0 swap node at this position with the one on the next position
+     */
     public void swapAdjacent(int pos0) { //todo cleanup and test
 
         Node<T> node0 = getNode(pos0);
@@ -72,27 +88,42 @@ public class DLList<T>  {
         node1.setNext(node0);
 
     }
+
+    /**
+     * Used to represent double-linked nodes
+     * @param <F> Type
+     */
     public class Node<F> {
 
         private final F data;
         private Node<F> next;
         private Node<F> prev;
-        //private int size = 0;
 
-
-
+        /**
+         * @param data - the Data that the node stores
+         */
         public Node(F data) {
             this.data = data;
         }
 
+        /**
+         * @return get the node's data
+         */
         public F getData() {
             return data;
         }
 
+        /**
+         * @return get the next node
+         */
         public Node<F> getNext() {
             return next;
         }
 
+        /**
+         * Set the next node.
+         * @param next - new next node.
+         */
         public void setNext(Node<F> next) {
             this.next = next;
         }
