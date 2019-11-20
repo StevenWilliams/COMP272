@@ -1,7 +1,14 @@
 package org.stevenw.AU272.A2;
 
 public class BinaryTree<T> {
-    private Node<T> root;
+    /*
+    Binary-search-tree property: Let x be a node in a binary search tree. If y is a node
+in the left subtree of x, then y.key ≤ x.key. If y is a node in the right subtree of x, then
+y.key ≥ x.key. (Stanford)
+     */
+
+    protected int n;
+    protected Node<T> root;
     /*
     Proof that Prove that a binary tree with k leaves has height at least log k.
 
@@ -22,44 +29,59 @@ public class BinaryTree<T> {
     k <= 2^h
 
      */
-    public static class Node<F> {
-        public F getData() {
+
+    public int height() {
+        return height(this.root);
+    }
+    public int height(Node<T> node) {
+        if(node == null) return -1;
+        return 1 + Math.max(height(node.getLeft()), height(node.getRight()));
+    }
+    public int size() {
+        return size(root);
+    }
+    public int size(Node<T> node) {
+        if(node == null) return 0;
+        return 1 + size(node.left) + size(node.right);
+    }
+    public static class Node<T> {
+        public T getData() {
             return data;
         }
 
-        private F data;
+        private T data;
 
-        public Node<F> getLeft() {
+        public Node<T> getLeft() {
             return left;
         }
 
-        private Node<F> left;
+        private Node<T> left;
 
-        public Node<F> getRight() {
+        public Node<T> getRight() {
             return right;
         }
 
-        private Node<F> right;
-        private Node<F> parent;
+        private Node<T> right;
+        private Node<T> parent;
 
-        public Node<F> getParent() {
+        public Node<T> getParent() {
             return parent;
         }
 
-        public void setParent(Node<F> parent) {
+        public void setParent(Node<T> parent) {
             this.parent = parent;
         }
 
-        public Node(F data) {
+        public Node(T data) {
 
             this.data = data;
         }
 
-        public void setLeft(Node<F> left) {
+        public void setLeft(Node<T> left) {
             this.left = left;
         }
 
-        public void setRight(Node<F> right) {
+        public void setRight(Node<T> right) {
             this.right = right;
         }
     }

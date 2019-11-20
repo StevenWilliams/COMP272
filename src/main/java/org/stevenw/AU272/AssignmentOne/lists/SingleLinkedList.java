@@ -5,9 +5,9 @@ import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
 public class SingleLinkedList<E> {
-    SingleLinkedNode<E> head;
-    SingleLinkedNode<E> tail;
-    int size = 0;
+    protected SingleLinkedNode<E> head;
+    protected SingleLinkedNode<E> tail;
+    protected int size = 0;
 
     /**
      * @return how many items are in the list
@@ -49,9 +49,8 @@ public class SingleLinkedList<E> {
 
     /**
      * @param element an instance of the type's object (must be comparable)
-     * @returns true if added to list
      */
-    public boolean add(E element) {
+    public void add(E element) {
         SingleLinkedNode node = new SingleLinkedNode<>(element);
         if (size() == 0) {
             head = node;
@@ -60,7 +59,6 @@ public class SingleLinkedList<E> {
         }
         tail = node;
         size++;
-        return true;
     }
 
 
@@ -75,8 +73,7 @@ public class SingleLinkedList<E> {
         return (E) head.getData();
     }
 
-    public void sort() {
-    }
+
 
     public void add(int pos, Comparable element) {
     }

@@ -17,7 +17,7 @@ public class MinStack<T extends Comparable<T>> {
     private MinNode<T> top;
    //private SingleLinkedNode<T> min;
 
-    public class MinNode<T extends Comparable<T>> extends SingleLinkedNode<T> {
+    public class MinNode<T extends Comparable<? super T>>  extends SingleLinkedNode<T> {
         private T min;
         private MinNode<T> next;
 

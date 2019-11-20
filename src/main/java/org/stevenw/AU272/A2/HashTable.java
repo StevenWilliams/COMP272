@@ -1,4 +1,4 @@
-package org.stevenw.AU272.AssignmentOne;
+package org.stevenw.AU272.A2;
 
 import java.util.Arrays;
 

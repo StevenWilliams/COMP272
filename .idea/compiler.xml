@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <excludeFromCompile>
+      <file url="file://$PROJECT_DIR$/src/main/java/org/stevenw/AU272/AssignmentOne/USet.java" />
+      <file url="file://$PROJECT_DIR$/src/main/java/org/stevenw/AU272/AssignmentOne/bag/Bag.java" />
+      <file url="file://$PROJECT_DIR$/src/test/java/org/stevenw/AU272/AssignmentOne/DLListTest.java" />
+      <file url="file://$PROJECT_DIR$/src/test/java/org/stevenw/AU272/AssignmentOne/PriorityQueueTest.java" />
+    </excludeFromCompile>
+  </component>
+</project>
