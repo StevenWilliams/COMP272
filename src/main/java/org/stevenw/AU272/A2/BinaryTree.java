@@ -9,6 +9,9 @@ y.key ≥ x.key. (Stanford)
 
     protected int n;
     protected Node<T> root;
+    protected Node<T> getRoot() {
+        return root;
+    }
     /*
     Proof that Prove that a binary tree with k leaves has height at least log k.
 
@@ -151,12 +154,12 @@ inOrderNumber(), and postOrderNumbers()
         tree.root.right = new Node(3);
         tree.root.left.left = new Node(4);
         tree.root.left.right = new Node(5);
-        System.out.println(tree.preOrderNext(tree.root).data.toString());
+      /*  System.out.println(tree.preOrderNext(tree.root).data.toString());
         System.out.println(tree.preOrderNext(tree.root.left).data.toString());
         System.out.println(tree.preOrderNext(tree.root.left.left).data.toString());
         System.out.println(tree.preOrderNext(tree.root.left.right).data.toString());
         System.out.println(tree.preOrderNext(tree.root.right).data.toString());
-
+*/
     }
 
 }

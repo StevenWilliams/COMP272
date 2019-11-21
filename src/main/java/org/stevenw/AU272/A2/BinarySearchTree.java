@@ -82,14 +82,40 @@ public class BinarySearchTree<T extends Comparable<? super T>> extends BinaryTre
 		return new NodeDepthPair(parent, depth);
 	}
 
-	public boolean add(T element) {
+	protected boolean add(Node<T> node) {
+		if(node.getData() == null) {
+			return false;
+		}
+		//Node<T> node = new Node<T>(element);
+		if(root == null) {
+			root = node;
+			return true;
+		} else {
+			Node<T> last = findLast(node);
+			if(node.getData() == last.getData()) {
+				return false;
+			} else if(node.getData().compareTo(last.getData()) < 0 ) {
+				last.setLeft(node);
+				return true;
+			} else {
+				last.setRight(node);
+				return true;
+			}
+		}
+	}
+		public boolean add(T element) {
+		if(element == null) return false;
+		Node<T> node = new Node<T>(element);
+		return this.add(node);
+
+		/*
 		if(element.compareTo(min) < 0) {
 			min =  element;
 		}
 		if(element.compareTo(max) >0) {
 			max = element;
-		}
-		return false;
+		}*/
+
 		//todo: implement code
 	}
 		private boolean satisfiesSearchOrder(BinaryTree.Node<T> node, T min, T max) {
