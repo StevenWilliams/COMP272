@@ -5,6 +5,8 @@ import org.stevenw.AU272.AssignmentOne.lists.SingleLinkedNode;
 
 public class PriorityQueue<T extends Comparable<? super T>> extends SingleLinkedList<T> {
 
+    //size is inherited from List, which runs in constant time
+
     /**
      * @return the element with the highest priority (lowest value)
      * Runtime will be O(1) as all it does is returns the top node, and replaces the top node reference with the next node.
@@ -13,15 +15,20 @@ public class PriorityQueue<T extends Comparable<? super T>> extends SingleLinked
         return this.remove(0);
     }
 
+    /**
+     * @return alias for deleteMin()
+     */
     @Override
     public T remove() {
         return deleteMin();
     }
+
     /**
      * @param element an instance of the type's object (must be comparable)
      * Internal notes: if item's priority (less than in comparable) is higher than the item in pos 0,
      *                it will displace the item in pos 0 at constant time, otherwise if it's lower than item in pos0 it will loop the list
      *                from the top in linear time until it's in the appropriate place in priority order.
+     *                Therefore worst-case time is O(n).
      */
     @Override
     public void add(T element) {
@@ -30,15 +37,11 @@ public class PriorityQueue<T extends Comparable<? super T>> extends SingleLinked
 
         int i =0;
         SingleLinkedNode<T> node0 = head;
+        //loop through array to find the appropriate place to put the item after.
         while(i < size()) {
-         //   System.out.println(i + " " + node0.getNext().getData());
             if(element.compareTo(node0.getNext().getData()) > 0) {
-             //   System.out.println(i + " " + node0.getData() + "larger");
-
                 node0 = node0.getNext();
             } else {
-               // System.out.println(i + " " + node0.getData() + "smaller");
-
                 break;
             }
             i++;
@@ -49,24 +52,6 @@ public class PriorityQueue<T extends Comparable<? super T>> extends SingleLinked
         if(i == size()) {
             tail = node;
         }
-        /*
-
-        if (size() == 0) {
-
-            //System.out.println("size0" + element.toString());
-        } else if (element.compareTo(this.get(0)) < 0) {
-            //higher priority items go to top
-            //element < head
-            //System.out.println("lessthan1st" + element.toString());
-            node.setNext(head.getNext());
-            head.setNext(node);
-            if(size() == 0) {
-                tail=node;
-            }
-        } else {
-            //lower priority go to bottom
-
-        }*/
         size++;
     }
 }

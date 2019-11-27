@@ -37,11 +37,11 @@ public class ScapegoatTree<T>
 	 * @param q
 	 * @return the ceiling of log_{3/2}(q)
 	 */
-	protected static final int log32(int q) {
+	protected static final double log32(int q) {
 		final double log23 = 2.4663034623764317;
 		System.out.println("log32: " + log23*Math.log(q));
-
-		return (int)Math.ceil(log23*Math.log(q));
+		//return log23*Math.log(q);
+		return (int)Math.floor(log23*Math.log(q));
 	}
 
 	/***
@@ -88,10 +88,14 @@ public class ScapegoatTree<T>
 
 	public boolean add(T x) {
 		// first do basic insertion keeping track of depth
+		System.out.println();
+
 		Node<T> u = newNode(x);
 		int d = addWithDepth(u);
 		System.out.println("depth: " + d);
 		System.out.println("q: " + q);
+		System.out.println("n: " + n);
+
 		System.out.println("log32: " + log32(q));
 
 		if (d > log32(q)) {
@@ -104,8 +108,16 @@ public class ScapegoatTree<T>
 			 */
 			while (3*size(w) <= 2*size(w.parent))
 				w = w.parent;
+			System.out.println("rebuild at " + w.parent.x);
 			rebuild(w.parent);
+			System.out.println("height at end: " + height());
+			System.out.println("root" + this.r.x);
+			System.out.println("right to root" + this.r.right.x);
+			System.out.println("right to right" + this.r.right.right.x);
+
+			System.out.println("LEFT to right" + this.r.right.left.x);
 		}
+
 		return d >= 0;
 	}
 

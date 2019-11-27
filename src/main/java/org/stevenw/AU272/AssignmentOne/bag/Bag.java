@@ -34,6 +34,11 @@ public class Bag<T> {
     }
 
 
+    /**
+     * Remove an element from the bag
+     * @param item - item to remove from bag
+     * @return - removes last element added
+     */
     public T remove(T item) {
         if(uSet.containsKey(item)) {
             List<T> list = uSet.get(item);
@@ -49,6 +54,7 @@ public class Bag<T> {
 
 
     /**
+     * Looks for an element in the bag, and return the first item added if found
      * @param item - item to look for
      * @return - first duplicate item added to the bag
      */

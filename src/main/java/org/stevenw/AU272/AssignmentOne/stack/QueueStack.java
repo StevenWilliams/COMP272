@@ -3,7 +3,7 @@ package org.stevenw.AU272.AssignmentOne.stack;
 import org.stevenw.AU272.AssignmentOne.queue.FIFOQueue;
 
 public class QueueStack<T> implements Stack<T>{
-    int size = 0;
+    private int size = 0;
     /**
      * Used as the main queue
      */
@@ -14,6 +14,11 @@ public class QueueStack<T> implements Stack<T>{
      */
     private FIFOQueue<T> q2 = new FIFOQueue<>();
 
+    /**
+     * Adds an element to the top of the stack
+     * Time complexity: O(n), as it has to remove every element of 1 queue n * O(1) = O(n) to add it to the other queue
+     * @param element - element to add to the stack
+     */
     @Override
     public void push(T element) {
         q2.add(element);
@@ -31,6 +36,11 @@ public class QueueStack<T> implements Stack<T>{
         size++;
     }
 
+    /**
+     * Removes the value at the top of the stack (LIFO)
+     * Runs in O(1) as all it does is just updates references to the next node in FIFOQueue
+     * @return the value at the top of the stack
+     */
     @Override
     public T pop() {
         size--;

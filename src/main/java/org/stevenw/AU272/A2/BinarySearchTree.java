@@ -2,16 +2,11 @@ package org.stevenw.AU272.A2;
 
 public class BinarySearchTree<T extends Comparable<? super T>> extends BinaryTree<T> {
 
-
-	//protected Node<T> root;
-
-	/*public static class Node<T> extends BinaryTree.Node<T> {
-
-		public Node(T data) {
-			super(data);
-		}
-	}*/
-
+	/**
+	 * Finds node in BST and returns it, otherwise return null
+	 * @param node Node to find
+	 * @return Node if found, otherwise null
+	 */
 	public Node<T> find(Node<T> node) {
 		BinaryTree.Node<T> parent = null;
 
@@ -30,6 +25,9 @@ public class BinarySearchTree<T extends Comparable<? super T>> extends BinaryTre
 
 	public class NodeDepthPair {
 		private final Node<T> node;
+		/**
+		 * depth of node
+		 */
 		private final int depth;
 		public NodeDepthPair(Node<T> val1, int val2) {
 			this.node = val1;
@@ -59,6 +57,11 @@ public class BinarySearchTree<T extends Comparable<? super T>> extends BinaryTre
 		return findLastWithDepth(node).getNode();
 	}
 
+	/**
+	 * Find node or last node on path, along with depth.
+	 * @param node - node to find
+	 * @return a NodeDepthPair of the Node searched for or last Node on path and the depth
+	 */
 	public NodeDepthPair findLastWithDepth(Node<T> node) {
 		BinaryTree.Node<T> parent = null;
 		int depth = -1;
@@ -77,13 +80,19 @@ public class BinarySearchTree<T extends Comparable<? super T>> extends BinaryTre
 		return new NodeDepthPair(parent, depth);
 	}
 
+	/**
+	 * Add a node to BST
+	 * @param node - Node to add to BST
+	 * @return true if added, false if not added
+	 */
 	protected boolean add(Node<T> node) {
 		if(node.getData() == null) {
 			return false;
 		}
-		//Node<T> node = new Node<T>(element);
 		if(root == null) {
 			root = node;
+			this.n++;
+
 			return true;
 		} else {
 			Node<T> last = findLast(node);
@@ -92,27 +101,27 @@ public class BinarySearchTree<T extends Comparable<? super T>> extends BinaryTre
 				return false;
 			} else if(node.getData().compareTo(last.getData()) < 0 ) {
 				last.setLeft(node);
+				this.n++;
+
 				return true;
 			} else {
 				last.setRight(node);
+				this.n++;
+
 				return true;
 			}
 		}
 	}
+
+	/**
+	 * Add an element to BST
+	 * @param element - element to add to BST
+	 * @return true if added, false if not added
+	 */
 	public boolean add(T element) {
 		if(element == null) return false;
 		Node<T> node = new Node<T>(element);
 		return this.add(node);
-
-		/*
-		if(element.compareTo(min) < 0) {
-			min =  element;
-		}
-		if(element.compareTo(max) >0) {
-			max = element;
-		}*/
-
-		//todo: implement code
 	}
 
 }

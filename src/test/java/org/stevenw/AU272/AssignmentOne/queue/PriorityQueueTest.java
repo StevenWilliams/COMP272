@@ -1,9 +1,7 @@
 package org.stevenw.AU272.AssignmentOne.queue;
 
-//import com.sun.tools.javac.util.Assert;
 
 import org.junit.jupiter.api.Assertions;
-//import static sun.jvm.hotspot.code.CompressedStream.L;
 
 
 class PriorityQueueTest {

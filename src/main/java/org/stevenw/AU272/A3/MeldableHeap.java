@@ -1,19 +1,32 @@
-package org.stevenw.AU272.A2;
+package org.stevenw.AU272.A3;
 
+
+import org.stevenw.AU272.A2.BinaryTree;
 
 import java.util.*;
 
 public class MeldableHeap<T extends Comparable<? super T>> extends BinaryTree<T> {
 
+	/**
+	 * comparator used for merging
+	 */
 	Comparator<T> comp;
+	/**
+	 * random generator for merging
+	 */
 	Random rand = new Random();
 
 	public MeldableHeap(Comparator<T> comparator) {
 		comp = comparator;
 	}
+
+	/**
+	 * Use default comparator for merging (casting to comparable) and using compare
+	 */
 	public MeldableHeap() {
 		comp = new DefaultComparator<T>();
 	}
+
 	class DefaultComparator<T> implements Comparator<T> {
 		@SuppressWarnings("unchecked")
 		public int compare(T a, T b) {

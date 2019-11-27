@@ -1,8 +1,9 @@
-package org.stevenw.AU272.A2;
+package org.stevenw.AU272.extra;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.stevenw.AU272.extra.ScapegoatTree;
 
 import static org.junit.jupiter.api.Assertions.*;
 

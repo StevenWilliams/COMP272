@@ -2,43 +2,42 @@ package org.stevenw.AU272.A2;
 
 import java.util.Arrays;
 
+/**
+ * Hashtable using k mod 13 hashing algorithm with linear probing
+ * @param <Key> type to store in the hashtable
+ */
 public class HashTable<Key> {
+
     private int entries = 0;
-    //private int tableSize = 1;
-    private int hashingModulo = 13;
+    /**
+     * starting power of 2 is 4 (16)
+     * This is since it's bigger than the mod for the hash algorithm.
+     * It will be incremented to grow the array.
+     */
     private int tableSizePower = 4;
-    //13 = 1101 -> 1111 (how?)
+
+    /**
+     * constant bigger than mod in hash function. Used for initial size of array.
+     */
     private final int MIN_SIZE = 16; //has to be a power of 2 greater greater than hash (13)
-    private Key[] table  = (Key[]) new Object[MIN_SIZE];
 
-    public int hash2(Object o) {
-        //hash(x) = ((z · x) mod 2 w ) div 2 w−d
-        return o.hashCode() % 13;
-    }
-    public static void main(String[] args) {
-        HashTable<Integer> table = new HashTable<Integer>();
-        table.add(1);
-        table.add(5);
-        table.add(21);
-        //26, 39, 14, 15, 16, 17, 18, 19, 20, 111, 145, 146}.
-        table.add(26);
-        table.add(39);
-        table.add(14);
-        table.add(15);
-        table.add(16);
-        table.add(17);
-        table.add(18);
-        table.add(19);
-        table.add(20);
-        table.add(111);
-        table.add(145);
-        table.add(146);
+    /**
+     * Array where all items are stored
+     */
+    protected Key[] table  = (Key[]) new Object[MIN_SIZE];
 
-        table.add(199);
-        table.add(5000);
-       System.out.println(Arrays.toString(table.table));
-       table.remove(5000);
+    /**
+     * @return # of elements in hashtable
+     */
+    public int size() {
+        return entries;
     }
+
+    /**
+     * Adds item to table by picking its index using linear probign
+     * @param x Item to add to table
+     * @return the index where it was added
+     */
     private int probe(Key x) {
         int index = hash(x);
         //int start = index;
@@ -60,15 +59,26 @@ public class HashTable<Key> {
             //this increases index, but prevents it from overflowing by starting it over again from 0.
             index = (index+1) & (~(1 << tableSizePower));
             tries++;
-            //index = (index >= tableSize) ? index+1 : 0;
             //make index have a max size of tableSize, and if incremented go to 0
         }
         table[index] = x;
         return index;
     }
+
+    /**
+     * Print the array backing the hashtable
+     */
+    void printTableArray() {
+        System.out.println(Arrays.toString(table));
+    }
+
+    /**
+     * @param x - item to add to hashtable
+     * @return false if already in table, true otherwise if added
+     */
     boolean add(Key x) {
         if(find(x) != null) return false;
-
+        probe(x);
         if(((float)(entries)/(float) table.length) >= 0.5) {
             tableSizePower++;
             resize();
@@ -76,6 +86,11 @@ public class HashTable<Key> {
         entries++;
         return true;
     }
+
+    /**
+     * @param x -key to find
+     * @return - the item in the hashtable that's equal to the key
+     */
     Key find(Key x) {
         int index = findKeyIndex(x);
         if(index < 0) {
@@ -93,6 +108,7 @@ public class HashTable<Key> {
     boolean remove(Key x) {
         int index = findKeyIndex(x);
         if(index < 0) {
+            //key not found
             return false;
         } else {
             table[index] = null;
@@ -117,16 +133,22 @@ public class HashTable<Key> {
         }
         return -1;
     }
+
+    /**
+     * Calculate hash for index
+     * @param x - key to hash
+     * @return k mod 13 hashing value
+     */
     int hash(Key x) {
         //index must be positive, so apply a bitmask that will make sure the number is positive.
         return (x.hashCode() & 0x7FFFFFFF) % 13;
     }
+
+    /**
+     * Resize hashtable array to size 2 to the power of tableSizePower and rehash/reprobe all elements.
+     */
     void resize(){
-        /*Goal. Average length of list N / M ≤ ½.
-・Double size of array M when N / M ≥ ½.
-・Halve size of array M when N / M ≤ ⅛.
-・Need to rehash all keys when resizing.*/
-        int newSize = 1 << tableSizePower;
+        int newSize = 1 << tableSizePower; // 2 to the power of tableSizePower
         Key[] oldTable = table;
         table = (Key[]) new Object[newSize];
         for(int i = 0; i<oldTable.length; i++){
@@ -134,6 +156,6 @@ public class HashTable<Key> {
                 probe(oldTable[i]);
             }
         }
-        System.out.println("resize: " + table.length);
     }
+
 }

@@ -1,7 +1,8 @@
-package org.stevenw.AU272.A2;
+package org.stevenw.AU272.A3;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.stevenw.AU272.A3.MeldableHeap;
 
 import static org.junit.jupiter.api.Assertions.*;
 

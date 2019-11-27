@@ -1,8 +1,10 @@
-package org.stevenw.AU272.A2;
+package org.stevenw.AU272.extra;
+
+import org.stevenw.AU272.A2.BinarySearchTree;
 
 import java.lang.reflect.Array;
 
-public class ScapegoatTree<T extends Comparable<? super T>> extends BinarySearchTree<T>  {
+public class ScapegoatTree<T extends Comparable<? super T>> extends BinarySearchTree<T> {
 	//private static double alpha = 2D/3D;
 	private int q = 0;
 	public boolean add(T element) {

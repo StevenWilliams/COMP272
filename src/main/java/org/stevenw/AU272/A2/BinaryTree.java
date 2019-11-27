@@ -4,95 +4,72 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class BinaryTree<T> {
-    /*
-    Binary-search-tree property: Let x be a node in a binary search tree. If y is a node
-in the left subtree of x, then y.key ≤ x.key. If y is a node in the right subtree of x, then
-y.key ≥ x.key. (Stanford)
+    /**
+     * Number of elements in tree
      */
-    private T min;
-    private T max;
     protected int n;
     protected Node<T> root;
+
     protected Node<T> getRoot() {
         return root;
     }
-    /*
-    Proof that Prove that a binary tree with k leaves has height at least log k.
 
-    height(k) >= log(k)
-
-    h >= log(k)
-    2^h >= k
-
-
-     k <= 2^h
-     log(k) <= log(2^h)
-     log(k) <= h
-     h >= log(k)
-
-
-    Pigeonhole principle?
-    Lemma: the number of leaves in a tree of height h is no more than 2^h.
-    k <= 2^h
-
+    /**
+	 * Calculate height of the Binary Tree (number of edges to furthest leaf node from root)
+     * @return height of binary tree
      */
-
     public int height() {
         return height(this.root);
     }
+
+    /**
+     * Calculates height for a given node.
+     * @param node - Node to find height of
+     * @return height of specified node
+     */
     public int height(Node<T> node) {
         if(node == null) return -1;
         return 1 + Math.max(height(node.getLeft()), height(node.getRight()));
     }
+
+    /**
+     * @return calculate size of binary tree
+     */
     public int size() {
         return size(root);
     }
+
+    /**
+     * Calculate size of a subtree
+     * @param node - Node to calculate subtree size for
+     * @return size of subtree
+     */
     public int size(Node<T> node) {
         if(node == null) return 0;
         return 1 + size(node.left) + size(node.right);
     }
 
+    /**
+     * @return true if binary tree is a valid BST
+     */
     public boolean satisfiesSearchOrder() {
         if(root == null) return true; //empty tree is still a BST
-        return satisfiesSearchOrder2(this.root, null, null);
+        return satisfiesSearchOrder(this.root, null, null);
     }
 
 
     /**
-     * @param a - comparable element
-     * @param b - comparable element
-     * @return max of A and B
-     * Based on code by Duncan McGregor (StackOverflow)
+     * @param node - Node to check whether it satisifed the BST search order property for
+     * @param min - min value that node must meet
+     * @param max - max value that node must meet
+     * @return true if it satisifes conditions, false otherwise
      */
-    public T max(T a, T b) {
-        if (a == null) {
-            if (b == null) return (T) a;
-            else return (T) b;
-        }
-        if (b == null)
-            return (T) a;
-        return ((Comparable<T>) a).compareTo((T) b) > 0 ? (T) a : (T) b;
-    }
-
-    /**
-     * @param a - comparable element
-     * @param b - comparable element
-     * @return max of A and B
-     * Based on code by Duncan McGregor (StackOverflow)
-     */
-    public T min(T a, T b) {
-        if (a == null) {
-            if (b == null) return (T) a;
-            else return (T) b;
-        }
-        if (b == null)
-            return (T) a;
-        return ((Comparable<T>) a).compareTo((T) b) < 0 ? (T) a : (T) b;
-    }
-
-
-
-    private boolean satisfiesSearchOrder2(Node<T> node, T min, T max) {
+    private boolean satisfiesSearchOrder(Node<T> node, T min, T max) {
+        /*
+ Binary-search-tree property: Let x be a node in a binary search tree. If y is a node
+in the left subtree of x, then y.key ≤ x.key. If y is a node in the right subtree of x, then
+y.key ≥ x.key.
+         */
         if(node == null) return true;
         if(min != null && ((Comparable<T>) node.getData()).compareTo(min) <= 0) {
             return false;
@@ -108,83 +85,10 @@ y.key ≥ x.key. (Stanford)
         //same applies for the right side
         //when going to the right child, the min for the subtree is the current node's value
         //the max would be the first left-side parent going up form the current node
-        return satisfiesSearchOrder2(node.getLeft(), min, node.getData())
-                && satisfiesSearchOrder2(node.getRight(), node.getData(), max);
+        return satisfiesSearchOrder(node.getLeft(), min, node.getData())
+                && satisfiesSearchOrder(node.getRight(), node.getData(), max);
     }
 
-    /**
-     * @param node
-     * @param min
-     * @param max
-     * @param side - 1 from left side, 0 from right, 2 from root
-     * @return
-     */
-    private boolean satisfiesSearchOrder(Node<T> node, T min, T max, int side) {
-        System.out.println();
-        if (node == null) return true;
-        if (node != root) {
-            System.out.println("chk1 " + node.getData() + " " + min + " " + max);
-
-            //right side must be greater than root at all times
-
-
-            //in every recursion, acceptable ranges get bigger
-
-            //make sure right child  is bigger than root and all nodes under the root on path to node
-            if (side == 1 && min != null && node != null && ((Comparable<T>) node.getData()).compareTo(min) <= 0) {
-                System.out.println("left" + node.getData() + " " + min.toString());
-                return false;
-            }
-
-            System.out.println("chk2 " + node.getData() + " " + min + " " + max);
-
-            //make sure right child is bigger than the current node
-            if (node.getRight() != null && ((Comparable<T>) node.getRight().getData()).compareTo(node.getData()) <= 0) {
-                return false;
-            }
-            System.out.println("chk3 " + node.getData() + " " + min + " " + max);
-
-
-            //make sure left node is bigger than the root and all nodes under the root to the node
-            if (side == 0 && max != null && node != null && ((Comparable<T>) node.getData()).compareTo(max) >= 0) {
-                System.out.println("right" + node.getData() + " " + " " + max.toString());
-                return false;
-            }
-
-            System.out.println("chk4 " + node.getData() + " " + min + " " + max);
-
-            //make sure left child is smaller than current node
-            if (node.getLeft() != null && ((Comparable<T>) node.getLeft().getData()).compareTo(node.getData()) >= 0) {
-                return false;
-            }
-            System.out.println("chkt " + node.getData() + " " + min + " " + max);
-            return satisfiesSearchOrder(node.getLeft(), min, node.getData(), 1) && satisfiesSearchOrder(node.getRight(),
-                    node.getData(), max, 0);
-        }
-        return true;
-    }
-
-    // else {
-       // return satisfiesSearchOrder(node.getLeft(), node.getData(), node.getData(), 1) && satisfiesSearchOrder(node.getRight(),
-         //       node.getData(), null, 0);
-    //}
-
-    /*
-    Binary-search-tree property: Let x be a node in a binary search tree. If y is a node
-in the left subtree of x, then y.key ≤ x.key. If y is a node in the right subtree of x, then
-y.key ≥ x.key.
-1 < left <
-     */
-    /*
-    if(node.getLeft()!= null && !(node.getLeft().getData().compareTo(node.getData()) <= 0)) {
-        return false;
-    }
-    if(node.getRight()!= null && !(node.getRight().getData().compareTo(node.getData()) >= 0)) {
-return false;
-    }
-    return (node.getLeft() == null) || (satisfiesSearchOrder(node.getLeft())) && ((node
-            .getRight() == null) || satisfiesSearchOrder(node.getLeft()));*/
-//}
 
     public static class Node<T> {
         public T getData() {
@@ -226,23 +130,14 @@ return false;
             this.right = right;
         }
     }
-    /*
-    (15 marks) Design an algorithm for the following operations for a binary tree BT, and show the
-worst-case running times for each implementation:
-preorderNext(x): return the node visited after node x in a pre-order traversal of BT.
-postorderNext(x): return the node visited after node x in a post-order traversal of BT.
-inorderNext(x): return the node visited after node x in an in-order traversal of BT.
-2. (25 marks) Design a recursive linear-time algorithm that tests whether a binary tree satisfies the
-search tree order property at every node.
-3. (20 marks) Exercise 8.2. Illustrate what happens when the sequence 1, 5, 2, 4, 3 is added to an empty
-ScapegoatTree, and show where the credits described in the proof of Lemma 8.3 go, and how they
-are used during this sequence of additions.
-4. (20 marks) Implement a commonly used hash table in a program that handles collision using linear
-probing. Using (K mod 13) as the hash function, store the following elements in the table: {1, 5, 21,
-26, 39, 14, 15, 16, 17, 18, 19, 20, 111, 145, 146}.
-5. (20 marks) Exercise 6.7. Create a subclass of BinaryTree whose nodes have fields for storing
-preorder, post-order, and in-order numbers. Write methods preOrderNumber(),
-inOrderNumber(), and postOrderNumbers()
+
+    /**
+     * Find what node comes after a given node in pre-order traversal
+     * @param node - node to find out what comes next in pre-order traversal
+     * @return next node
+     * Worst case time would be on the last node in pre-order traversal
+     * as it would have to travel up to the tree until it gets to the root.
+     * Worst case time would be O(n) in an unbalanced tree and O(log n) in a balanced tree
      */
     public Node<T> preOrderNext(Node<T> node) {
         //NLR
@@ -272,6 +167,13 @@ inOrderNumber(), and postOrderNumbers()
         return null;
 
     }
+
+    /**
+     * Finds what node comes after node given in post order traversal
+     * @param node a Node to find the next
+     * @return the next Node that comes after in postorder traversal
+     * Worst case time is when given the root, is it may have to go all the way down the tree to find the next node.
+     */
     public Node<T> postOrderNext(Node<T> node) {
         //LRN
             if(node == root) {
@@ -289,7 +191,7 @@ inOrderNumber(), and postOrderNumbers()
                 } else {
                     return node.getParent();
                 }
-                //next node is always under previous node.
+                //next node is always under previous node, if not parent (node is a right child of parent)
                 while(node != null) {
                     if (node.getLeft() == null && node.getRight() == null) {
                         //leave nodes
@@ -307,6 +209,12 @@ inOrderNumber(), and postOrderNumbers()
 
         return null;
     }
+
+
+    /**
+     * @param node a node
+     * @return - the deepest left node, forming a continuous left-child straight line
+     */
     private Node<T> goToLeftmostNode(Node<T> node) {
         while(node.getLeft() != null) {
             node = node.getLeft();
@@ -317,6 +225,8 @@ inOrderNumber(), and postOrderNumbers()
     /**
      * @param node - the node that you want to know what comes next for
      * @return the next node with inorder traversal. null if there are none left after the node given.
+     *
+     * Assumptions: Requires that a valid node in the tree be given.
      *
      * Worst case run time will be proportional to the height of the tree.
      * This will be the node forming a continuous right-line from the left child of the root,
