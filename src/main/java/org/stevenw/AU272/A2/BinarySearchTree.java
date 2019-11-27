@@ -1,14 +1,9 @@
 package org.stevenw.AU272.A2;
 
 public class BinarySearchTree<T extends Comparable<? super T>> extends BinaryTree<T> {
-	private T min;
-	private T max;
+
 
 	//protected Node<T> root;
-
-	public boolean satisfiesSearchOrder() {
-		return satisfiesSearchOrder(this.root, min, max);
-	}
 
 	/*public static class Node<T> extends BinaryTree.Node<T> {
 
@@ -92,6 +87,7 @@ public class BinarySearchTree<T extends Comparable<? super T>> extends BinaryTre
 			return true;
 		} else {
 			Node<T> last = findLast(node);
+			node.setParent(last);
 			if(node.getData() == last.getData()) {
 				return false;
 			} else if(node.getData().compareTo(last.getData()) < 0 ) {
@@ -103,7 +99,7 @@ public class BinarySearchTree<T extends Comparable<? super T>> extends BinaryTre
 			}
 		}
 	}
-		public boolean add(T element) {
+	public boolean add(T element) {
 		if(element == null) return false;
 		Node<T> node = new Node<T>(element);
 		return this.add(node);
@@ -117,34 +113,6 @@ public class BinarySearchTree<T extends Comparable<? super T>> extends BinaryTre
 		}*/
 
 		//todo: implement code
-	}
-		private boolean satisfiesSearchOrder(BinaryTree.Node<T> node, T min, T max) {
-		if(node == null) return true;
-
-		//in every recursion, acceptable ranges get bigger
-		if(node.getLeft()!= null && node.getLeft().getData().compareTo(min) > 0) {
-				return false;
-			}
-		if(node.getRight()!= null && node.getRight().getData().compareTo(max) < 0) {
-			return false;
-		}
-		return satisfiesSearchOrder(node.getLeft(), min, node.getData()) && satisfiesSearchOrder(node.getRight(), node.getData(), max);
-
-		/*
-		Binary-search-tree property: Let x be a node in a binary search tree. If y is a node
-in the left subtree of x, then y.key ≤ x.key. If y is a node in the right subtree of x, then
-y.key ≥ x.key.
-1 < left <
-		 */
-		/*
-		if(node.getLeft()!= null && !(node.getLeft().getData().compareTo(node.getData()) <= 0)) {
-			return false;
-		}
-		if(node.getRight()!= null && !(node.getRight().getData().compareTo(node.getData()) >= 0)) {
-	return false;
-		}
-		return (node.getLeft() == null) || (satisfiesSearchOrder(node.getLeft())) && ((node
-				.getRight() == null) || satisfiesSearchOrder(node.getLeft()));*/
 	}
 
 }

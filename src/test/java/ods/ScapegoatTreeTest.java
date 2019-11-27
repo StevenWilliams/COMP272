@@ -26,12 +26,19 @@ class ScapegoatTreeTest {
 
 	@Test
 	void add() {
-		for(int i = 1; i < 30; i++) {
+		tree.add(1);
+
+		tree.add(5);
+		tree.add(2);
+		tree.add(4);
+		tree.add(3);
+/*
+		for(int i = 1; i < 7; i++) {
 			System.out.println(i);
 			tree.add(i);
 			System.out.println("height " + tree.height());
 			System.out.println();
-		}
+		}*/
 	}
 
 	@Test

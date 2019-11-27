@@ -2,11 +2,16 @@ package org.stevenw.AU272.AssignmentOne.lists;
 
 import java.util.Collections;
 
-public class DLList<T>  {
-    private Node<T> head;
-    private Node<T> tail;
+public class DLList<T>  implements List<T> {
+    //dummy nodes
+    private Node<T> head = new Node<T>(null);
+    private Node<T> tail = new Node<T>(null);
     private int size = 0;
 
+    public DLList() {
+        head.setNext(tail);
+        tail.setPrev(head);
+    }
     public int size() {
         return size;
     }
@@ -17,6 +22,7 @@ public class DLList<T>  {
      * @return data of generic type T at the specified index.
      */
     public T get(int pos) {
+        if(pos >= size()) return null;
         return (T) getNode(pos).getData();
     }
 
@@ -25,27 +31,38 @@ public class DLList<T>  {
      * @return Node at specified index
      */
     private Node<T> getNode(int pos) {
-        Node<T> node = head;
+        Node<T> node = head.getNext();
         for (int j = 0; j < pos; j++) {
             node = node.getNext();
-            System.out.println("j" + j);
         }
         return node;
     }
 
+    public T remove(int pos) {
+        if(pos >= size()) return null;
+        Node<T> node = getNode(pos);
+        T data = node.getData();
+        node.getPrev().setNext(node.getNext());
+        node.getNext().setPrev(node.getPrev());
+        size--;
+        return data;
+    }
 
-    //check code (coped from single linked)
-    //todo: verify
-    public boolean add(Comparable element) {
-        Node node = new Node<>(element);
-        if (size() == 0) {
-            head = node;
-        } else {
-            tail.setNext(node);
-        }
-        tail = node;
+    @Override
+    public T remove() {
+        Node<T> node = tail.getPrev();
+        node.getPrev().setNext(tail);
+        tail.setPrev(node.getPrev());
+        return node.getData();
+    }
+
+    public void add(T element) {
+        Node<T> node = new Node<T>(element);
+
+        node.setPrev(tail.getPrev());
+        tail.getPrev().setNext(node);
+        tail.setPrev(node);
         size++;
-        return true;
     }
 
     /**
@@ -70,23 +87,20 @@ public class DLList<T>  {
 
     /**
      * @param pos0 swap node at this position with the one on the next position
+     * pos0 cannot be the least index
      */
-    public void swapAdjacent(int pos0) { //todo cleanup and test
-
+    public boolean swapAdjacent(int pos0) { //todo cleanup and test
+        if(pos0 >= size() -1) return false;
         Node<T> node0 = getNode(pos0);
         Node<T> node1 = node0.getNext();
-        if (pos0 > 0) {
-            Node<T> preNode0 = node0.getPrev();
-            node1.setPrev(preNode0);
-            preNode0.setNext(node1);
-        } else { //if node0 is head
-            head = node1;
-        }
-        //[-1, 0, 1, 2, 3] =_> [-1, 1, 0, 2, 3]
-        node0.setNext(node1.getNext());
-        node0.setPrev(node1);
-        node1.setNext(node0);
 
+        node0.getPrev().setNext(node1);
+        node1.getNext().setPrev(node0);
+        node1.setPrev(node0.getPrev());
+        node0.setNext(node1.getNext());
+        node1.setNext(node0);
+        node0.setPrev(node1);
+        return true;
     }
 
     /**

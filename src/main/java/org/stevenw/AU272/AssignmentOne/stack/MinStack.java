@@ -3,21 +3,22 @@ package org.stevenw.AU272.AssignmentOne.stack;
 import org.stevenw.AU272.AssignmentOne.lists.SingleLinkedList;
 import org.stevenw.AU272.AssignmentOne.lists.SingleLinkedNode;
 
-public class MinStack<T extends Comparable<T>> {
+public class MinStack<T extends Comparable<T>> implements Stack<T>{
     /**
      * (20 marks) Exercise 3.14. Design and implement a MinStack data structure that can store
      * comparable elements and supports the stack operations push(x), pop(), and size(), as well as the
      * min() operation, which returns the minimum value currently stored in the data structure. All
      * operations should run in constant tim
      */
-    /*
-    In order to maintain constant time, add the min value to each node.
-     */
+
     private int size = 0;
     private MinNode<T> top;
-   //private SingleLinkedNode<T> min;
 
-    public class MinNode<T extends Comparable<? super T>>  extends SingleLinkedNode<T> {
+    public class MinNode<T extends Comparable<? super T>>  extends SingleLinkedNode<T> {    /*
+    In order to maintain constant time, add the min value to each node.
+    Additional size requirement compared to a regular Stack Node is O(n) which a regular stack is also so no asymptotic size changes.
+     */
+        //include the min value in each node
         private T min;
         private MinNode<T> next;
 
@@ -54,11 +55,9 @@ public class MinStack<T extends Comparable<T>> {
             min = item;
         }
         node.setMin(min);
-        node.setNext(top);
-        /*
         if(top != null) {
             node.setNext(top);
-        }*/
+        }
         top = node;
         size++;
     }
@@ -75,7 +74,11 @@ public class MinStack<T extends Comparable<T>> {
     public int size() {
         return size;
     }
+
     public T min() {
+        if(top == null) {
+            return null;
+        }
         return top.getMin();
     }
 

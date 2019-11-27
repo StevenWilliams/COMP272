@@ -101,8 +101,15 @@ If we let m=a.length/2, then the element a[m] becomes the root of the new subtre
 	}
 
 
-	double log_3_2(int q) {
-		return Math.log10((double) q)/Math.log10(1.5);
+	/**
+	 * @param q
+	 * @return
+	 * The paper for scapegoat trees (Galperin 93) defines a deep node, to be one where it's greater than the floor of log_base_1/a of n.
+	 * alpha = 2/3, therefore it checks the floor of log_base1.5(q).
+	 * This is not made clear in the text, which only defines depth > log_3/2 of q for when a deep node is inserted.
+	 */
+	int log_3_2(int q) {
+		return (int) Math.floor(Math.log10((double) q)/Math.log10(1.5));
 	}
 
 

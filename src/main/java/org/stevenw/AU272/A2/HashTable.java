@@ -14,7 +14,6 @@ public class HashTable<Key> {
     public int hash2(Object o) {
         //hash(x) = ((z · x) mod 2 w ) div 2 w−d
         return o.hashCode() % 13;
-
     }
     public static void main(String[] args) {
         HashTable<Integer> table = new HashTable<Integer>();
@@ -34,11 +33,13 @@ public class HashTable<Key> {
         table.add(111);
         table.add(145);
         table.add(146);
+
         table.add(199);
         table.add(5000);
        System.out.println(Arrays.toString(table.table));
+       table.remove(5000);
     }
-    private boolean probe(Key x) {
+    private int probe(Key x) {
         int index = hash(x);
         //int start = index;
         //boolean reset = false;
@@ -55,28 +56,69 @@ public class HashTable<Key> {
             //table size 10 (1010), index 6 (0110)
             //0110 & ~(1010) = 0110 & 0101 = 0100 (4)
             //only works for powers of 2.
+
+            //this increases index, but prevents it from overflowing by starting it over again from 0.
             index = (index+1) & (~(1 << tableSizePower));
             tries++;
             //index = (index >= tableSize) ? index+1 : 0;
             //make index have a max size of tableSize, and if incremented go to 0
         }
         table[index] = x;
-        entries++;
-        return true;
+        return index;
     }
     boolean add(Key x) {
         if(find(x) != null) return false;
-        if((float)(entries)/(float) table.length >= 0.5) {
+
+        if(((float)(entries)/(float) table.length) >= 0.5) {
             tableSizePower++;
             resize();
         }
-
-        return probe(x);
+        entries++;
+        return true;
     }
     Key find(Key x) {
-        return null;
+        int index = findKeyIndex(x);
+        if(index < 0) {
+            return null;
+        } else {
+            return table[index];
+        }
+    }
+
+    /**
+     * @param x - Key to remove
+     * @return true if removed, false if not found
+     * Removes specified key from hashtable.
+     */
+    boolean remove(Key x) {
+        int index = findKeyIndex(x);
+        if(index < 0) {
+            return false;
+        } else {
+            table[index] = null;
+            entries--;
+            return true;
+        }
+    }
+
+    /**
+     * @param x - key to search for
+     * @return index of key, if key not found, then return -1.
+     */
+    int findKeyIndex(Key x) {
+        int index = hash(x);
+        int tries = 0;
+        while(tries <= table.length) {
+            if(table[index] == x) {
+                return index;
+            }
+            index = (index+1) & (~(1 << tableSizePower));
+            tries++;
+        }
+        return -1;
     }
     int hash(Key x) {
+        //index must be positive, so apply a bitmask that will make sure the number is positive.
         return (x.hashCode() & 0x7FFFFFFF) % 13;
     }
     void resize(){
@@ -84,7 +126,7 @@ public class HashTable<Key> {
 ・Double size of array M when N / M ≥ ½.
 ・Halve size of array M when N / M ≤ ⅛.
 ・Need to rehash all keys when resizing.*/
-        int newSize = tableSizePower << 1;
+        int newSize = 1 << tableSizePower;
         Key[] oldTable = table;
         table = (Key[]) new Object[newSize];
         for(int i = 0; i<oldTable.length; i++){
@@ -92,5 +134,6 @@ public class HashTable<Key> {
                 probe(oldTable[i]);
             }
         }
+        System.out.println("resize: " + table.length);
     }
 }

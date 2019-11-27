@@ -1,16 +1,9 @@
 package org.stevenw.AU272.A2;
 
 public class BinaryTreeOrderNumbers<T extends Comparable<? super T>> extends BinarySearchTree<T> {
-	//protected Node root;
-	private int n = 0;
-
-	@Override
-	public int size() {
-		return n;
-	}
 
 	public void postOrderNumber() {
-		postOrderNumber((Node) root, 1);
+		postOrderNumber((Node) root, 0);
 	}
 	private int postOrderNumber(Node node, int number) {
 		if(node != null) {
@@ -27,13 +20,13 @@ public class BinaryTreeOrderNumbers<T extends Comparable<? super T>> extends Bin
 		}
 		return number;
 	}
-	public class Node<T> extends BinaryTree.Node {
+	public class Node<T> extends BinaryTree.Node<T> {
 
 		private int preOrder;
 		private int postOrder;
 		private int inOrder;
 
-		public Node(Object data) {
+		public Node(T data) {
 			super(data);
 		}
 
@@ -79,12 +72,12 @@ public class BinaryTreeOrderNumbers<T extends Comparable<? super T>> extends Bin
    2. Traverse the left subtree, i.e., call Preorder(left-subtree)
    3. Traverse the right subtree, i.e., call Preorder(right-subtree)
 		 */
-		preOrderNumber((Node) root, null, 1, n);
+		preOrderNumber((Node) root, 0);
 	}
 
 
 	public void inOrderNumber() {
-		inOrderNumber((Node) root,  1);
+		inOrderNumber((Node) root,  0);
 	}
 	private int inOrderNumber(Node node, int number) {
 		if(node != null) {
@@ -104,17 +97,17 @@ public class BinaryTreeOrderNumbers<T extends Comparable<? super T>> extends Bin
 
 	}
 
-	public int preOrderNumber(Node node, Node parent, int number, int max) {
+	public int preOrderNumber(Node node, int number) {
 		//count++;
 		if(node != null) {
 			int futureNumber = number+1;
 			node.setPreOrder(number);
 			System.out.println(node.getData() + " " + number);
 			if(node.getLeft() != null) {
-				futureNumber = preOrderNumber((Node) node.getLeft(), node, number+1, max);
+				futureNumber = preOrderNumber((Node) node.getLeft(), number+1);
 			}
 			if (node.getRight() != null){
-				futureNumber = preOrderNumber((Node) node.getRight(), node, futureNumber, max);
+				futureNumber = preOrderNumber((Node) node.getRight(), futureNumber);
 			}
 			return Math.max(futureNumber, number+1);
 		}
